@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/ema-john-shop/static/css/main.8fe99579.chunk.css",
+    "main.js": "/ema-john-shop/static/js/main.d756ee5e.chunk.js",
+    "main.js.map": "/ema-john-shop/static/js/main.d756ee5e.chunk.js.map",
+    "runtime-main.js": "/ema-john-shop/static/js/runtime-main.6e320c54.js",
+    "runtime-main.js.map": "/ema-john-shop/static/js/runtime-main.6e320c54.js.map",
+    "static/js/2.5651f1b4.chunk.js": "/ema-john-shop/static/js/2.5651f1b4.chunk.js",
+    "static/js/2.5651f1b4.chunk.js.map": "/ema-john-shop/static/js/2.5651f1b4.chunk.js.map",
+    "index.html": "/ema-john-shop/index.html",
+    "precache-manifest.ed65a85037791056970ad578fe9d226e.js": "/ema-john-shop/precache-manifest.ed65a85037791056970ad578fe9d226e.js",
+    "service-worker.js": "/ema-john-shop/service-worker.js",
+    "static/css/main.8fe99579.chunk.css.map": "/ema-john-shop/static/css/main.8fe99579.chunk.css.map",
+    "static/js/2.5651f1b4.chunk.js.LICENSE.txt": "/ema-john-shop/static/js/2.5651f1b4.chunk.js.LICENSE.txt",
+    "static/media/logo.png": "/ema-john-shop/static/media/logo.95f238a5.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6e320c54.js",
+    "static/js/2.5651f1b4.chunk.js",
+    "static/css/main.8fe99579.chunk.css",
+    "static/js/main.d756ee5e.chunk.js"
+  ]
+}
