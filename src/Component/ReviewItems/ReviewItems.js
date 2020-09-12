@@ -3,11 +3,12 @@ import { Button, Image } from 'react-bootstrap';
 
 const ReviewItems = (props) => {
     const {key, quantity, name, img, category, price, seller, shipping} = props.product;
+    const clickHandler = props.clickHandler;
     return (
         <>          
             <tr>
-                <td>{key}</td>
-                <td className="d-flex">
+                <td className="align-middle">{key}</td>
+                <td className="d-flex align-middle">
                     <div>
                         <Image height={100} src={img} alt="pdr" rounded />
                     </div>
@@ -25,13 +26,13 @@ const ReviewItems = (props) => {
                         </div>
                     </div>
                 </td>
-                <td>
+                <td className="align-middle">
                     <div className="d-flex align-items-center">
-                        <Button variant="danger">Delete</Button>
+                        <Button onClick={() => clickHandler(key)} variant="danger">Delete</Button>
                     </div>
                 </td>
-                <td className="align-items-center">{quantity}</td>
-                <td>{price * quantity}</td>
+                <td className="align-middle">{quantity}</td>
+                <td className="align-middle">{price * quantity}</td>
             </tr>
         </>
     );

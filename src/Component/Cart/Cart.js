@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Cart = (props) => {
     const cart = props.items;
 
-    const totalPrice = cart.reduce((totalPrice, pdr) => totalPrice + pdr.price, 0);
+    const totalPrice = cart.reduce((totalPrice, pdr) => totalPrice + (pdr.price * pdr.quantity), 0);
 
     let shippingCost = 0;
     if(totalPrice >= 1 && totalPrice <= 50 ){
@@ -18,13 +18,15 @@ const Cart = (props) => {
         shippingCost = 0.00;
     }
     return (
-        <div>
+        <div style={{position: 'sticky', top: '0'}}>
             <h3>Order Summery</h3>
             <p>Items Ordered : {cart.length}</p>
             <p>Shipping: {shippingCost}</p>
 
             <h2 style={{color: 'red'}}>Total Price : {totalPrice + shippingCost}</h2>
-            <Link to="/review"><button className="btn btn-danger">Review Cart</button></Link>
+            {
+                props.children
+            }
         </div>
     );
 };

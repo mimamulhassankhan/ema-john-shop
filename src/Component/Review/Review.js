@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { getDatabaseCart } from '../../utilities/databaseManager';
+import { getDatabaseCart, processOrder, removeFromDatabaseCart } from '../../utilities/databaseManager';
 import fakeData from '../../fakeData';
-import { CardGroup, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 import ReviewItems from '../ReviewItems/ReviewItems';
+import Cart from '../Cart/Cart';
+import { Link } from 'react-router-dom';
+import happyImage from '../../images/giphy.gif';
 
 const Review = () => {
     const [cart, setCart] = useState([]);
+    const [orderPlaced, setOrderPlaced] = useState(false);
 
     useEffect( () => {
         const localCart = getDatabaseCart();
@@ -18,31 +22,53 @@ const Review = () => {
         });
         setCart(cartProducts);
     }, []);
-    const price = cart.reduce((pd, price) => price + pd.price , 0);
-    console.log(cart);
+
+    const placeOrderButtonClick = () => {
+        processOrder();
+        setCart([]);
+        setOrderPlaced(true);
+    }
+
+    const deleteProductHandler = (productKey) =>{
+        const newCart = cart.filter(pd => pd.key !== productKey);
+        setCart(newCart);
+        removeFromDatabaseCart(productKey);
+    }
+    let successImage; 
+    if(orderPlaced){
+        successImage = <img src={happyImage} alt="happyman"/>
+    }
     return (
-        <div>
-            <h3>Items in the cart : {cart.length}</h3>
-            <Table striped bordered hover variant="dark">
-                <thead>
-                    <tr>
-                        <th>Product ID</th>
-                        <th>product Details</th>
-                        <th>Actions</th>
-                        <th>Quantity</th>
-                        <th>Total Price</th>     
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        cart.map(pd => <ReviewItems key={pd.key} product={pd}></ReviewItems>)
-                    }
-                    <tr>
-                        <td className="bg-danger text-right" colSpan="4"><strong>Total : </strong></td>
-                        <td className="bg-danger">{price}</td>
-                    </tr>
-                </tbody>
-            </Table>
+        <div className="d-flex">
+            <div style={{width: '70%'}}>
+                { successImage }
+                <Table striped bordered hover variant="dark">
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>product Details</th>
+                            <th>Actions</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>     
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            cart.map(pd => <ReviewItems clickHandler={deleteProductHandler} key={pd.key} product={pd}></ReviewItems>)
+                        }
+                        <tr>
+                            <td className="bg-danger text-right" colSpan="4"><strong>Total : </strong></td>
+                            <td className="bg-danger"></td>
+                        </tr>
+                    </tbody>
+                </Table>
+            </div>
+            <div className="ml-2 mt-2">
+                <Cart items={cart}>
+                <Link ><button onClick={placeOrderButtonClick} className="btn btn-info">Place Order</button></Link>
+                </Cart>
+            </div>
+            
         </div>
     );
 };

@@ -9,7 +9,7 @@ const Product = (props) => {
     return (
         <div className="singleProduct">
             <div className="imagePart">
-                <img src={img} alt="product-img"/>
+                <img className="rounded float-left" src={img} alt="product-img"/>
             </div>
             <div className="descriptionPart">
                 <h3 className="productName"><Link to={"/product/"+key}>{name}</Link></h3>
@@ -17,7 +17,7 @@ const Product = (props) => {
                 <p><small>by : {seller}</small></p>
                 <p>${price}</p>
                 <p>only {stock} lrft in the stock. Order soon</p>
-                {props.showAddToCart && <button onClick={() => props.clickHandler(props.product)} className="addToCartButton"> <FontAwesomeIcon icon={faShoppingCart}></FontAwesomeIcon> add to cart</button>}
+                {props.showAddToCart && <button onClick={() => props.clickHandler(props.product)} className="btn btn-success"> <FontAwesomeIcon icon={faShoppingCart}></FontAwesomeIcon> add to cart</button>}
             </div>
         </div>
     );
