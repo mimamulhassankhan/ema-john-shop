@@ -10,16 +10,6 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(System.DefaultWorkingDirectory)/build' 
-    includeRootFolder: false 
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-
-- publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-  artifact: '$(Build.BuildId)'
-  
 - task: NodeTool@0
   inputs:
     versionSpec: '10.x'
