@@ -49,7 +49,7 @@ const Shop = () => {
             </div>
             <div className="cart-container">
                 <Cart items={cart}>
-                    <Link to="/review"><button className="btn btn-danger">Review Cart</button></Link>
+                    <Link to="/shipment"><button className="btn btn-danger">Procced Checkout</button></Link>
                 </Cart>
             </div>  
         </div>
