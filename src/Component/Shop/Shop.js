@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import fakeData from '../../fakeData';
 import './Shop.css'
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
@@ -7,19 +6,29 @@ import { addToDatabaseCart, getDatabaseCart } from '../../utilities/databaseMana
 import { Link } from 'react-router-dom';
 
 const Shop = () => {
-    const firstTenProducts = fakeData.slice(0,10);
-    const [products, setProducts] = useState(firstTenProducts);
+
+    const [products, setProducts] = useState([]);
     const [cart,setCart] = useState([]);
 
     useEffect( () => {
-        const products = getDatabaseCart();
-        const productKeys = Object.keys(products);
-        const previousProducts = productKeys.map( pdKey => {
-            const productOnCart = fakeData.find(pd => pd.key === pdKey);
-            productOnCart.quantity = products[pdKey];
-            return productOnCart;
+        fetch('https://fathomless-basin-42766.herokuapp.com/products')
+        .then(res => res.json())
+        .then(data => setProducts(data));
+    }, [])
+
+    useEffect( () => {
+        const storedProducts = getDatabaseCart();
+        const productKeys = Object.keys(storedProducts);
+        
+        fetch('https://fathomless-basin-42766.herokuapp.com/selectedProduct', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productKeys)
         })
-        setCart(previousProducts);
+        .then(res => res.json())
+        .then(data => setCart(data));
     },[])
 
     const addProductToCart = (product) =>{
@@ -44,7 +53,7 @@ const Shop = () => {
         <div className="d-flex" style={{borderBottom: '1px solid #000', backgroundColor: 'lightgray'}}>
             <div className="w-75 p-3 ml-5">
                 {
-                    products.map(oneProduct => <Product showAddToCart={true} clickHandler={addProductToCart} product={oneProduct} key={oneProduct.key}></Product>)
+                    products.map(oneProduct => <Product showAddToCart={true} clickHandler={addProductToCart} product={oneProduct} key={oneProduct._id}></Product>)
                 }
             </div>
             <div className="cart-container">

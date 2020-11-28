@@ -18,6 +18,7 @@ export const handleGoogleSignIn = () => {
         email: email,
         photo : photoURL
       }
+      storeUserToken();
       return signedInUser;
     })
     .catch(err => {
@@ -25,6 +26,15 @@ export const handleGoogleSignIn = () => {
       console.log(err.message);
     });
 }
+
+
+const storeUserToken = () => {
+  firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+    sessionStorage.setItem('token', idToken);
+  }).catch(function(error) {
+    // Handle error
+  });
+} 
 
 
 export const handleFbSignIn = () => {

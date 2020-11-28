@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { getDatabaseCart, processOrder, removeFromDatabaseCart } from '../../utilities/databaseManager';
-import fakeData from '../../fakeData';
 import { Table } from 'react-bootstrap';
 import ReviewItems from '../ReviewItems/ReviewItems';
 import Cart from '../Cart/Cart';
@@ -15,12 +14,15 @@ const Review = () => {
         const localCart = getDatabaseCart();
         const productKeys = Object.keys(localCart);
 
-        const cartProducts = productKeys.map(key => {
-            const singleProduct = fakeData.find(pd => pd.key === key);
-            singleProduct.quantity = localCart[key];
-            return singleProduct;
-        });
-        setCart(cartProducts);
+        fetch('https://fathomless-basin-42766.herokuapp.com/selectedProduct', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productKeys)
+        })
+        .then(res => res.json())
+        .then(data => setCart(data));
     }, []);
 
     const placeOrderButtonClick = () => {
@@ -65,7 +67,7 @@ const Review = () => {
             </div>
             <div className="ml-2 mt-2">
                 <Cart items={cart}>
-                <Link ><button onClick={placeOrderButtonClick} className="btn btn-info">Place Order</button></Link>
+                <button onClick={placeOrderButtonClick} className="btn btn-info">Place Order</button>
                 </Cart>
             </div>
             

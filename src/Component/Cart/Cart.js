@@ -1,17 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-
-const Cart = (props) => {
-    const cart = props.items;
-
-    const totalPrice = cart.reduce((totalPrice, pdr) => totalPrice + (pdr.price * pdr.quantity), 0);
+const Cart = ({items, ...props}) => {
+    console.log(items)
+    const cart = items;
+    let totalPrice = 0.00;
+    
+    totalPrice = cart.reduce((totalPrice, pdr) => totalPrice + pdr.price, 0);
 
     let shippingCost = 0;
     if(totalPrice >= 1 && totalPrice <= 50 ){
         shippingCost = 10.00;
     }
-    else if(totalPrice >= 51 &&totalPrice <= 200){
+    else if(totalPrice >= 51 && totalPrice <= 200){
         shippingCost = 5.00;
     }
     else{
