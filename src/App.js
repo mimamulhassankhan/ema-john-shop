@@ -11,6 +11,7 @@ import ProductDetails from './Component/ProductDetails/ProductDetails';
 import Shipment from './Component/Shipment/Shipment';
 import Login from './Component/Login/Login';
 import PrivateRoute from './Component/PrivateRoute/PrivateRoute';
+import Footer from './Component/Shared/Footer/Footer';
 
 export const UserContext = createContext();
 
@@ -20,7 +21,7 @@ function App() {
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
       <Router>
-        <Header/>
+        <Header></Header>
         <Switch>
           <Route exact path="/">
             <Shop></Shop>
@@ -47,6 +48,7 @@ function App() {
             <Error></Error>
           </Route>
         </Switch>
+        <Footer></Footer>
       </Router>
     </UserContext.Provider>
   );

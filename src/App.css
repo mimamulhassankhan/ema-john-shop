@@ -2,6 +2,14 @@
   color: #61dafb;
 }
 
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+p{
+  margin: 0px 0px !important;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -9,4 +17,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.bg-gray{
+  background-color: #f6f6f8;
 }
