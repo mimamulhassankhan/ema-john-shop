@@ -64,47 +64,16 @@ export const handleSignOut = () => {
     })
   }
 
-export const createUserWithEmailAndPassword = (name, email, pass) => {
-    return firebase.auth().createUserWithEmailAndPassword(email, pass)
-      .then(res => {
-        const newUserInfo = res.user;
-        newUserInfo.error = '';
-        newUserInfo.success = true;
-        updateUserInfo(name);
-        return newUserInfo;
-      })
-      .catch(err => {
-        const newUserInfo = {};
-        newUserInfo.error = err.message;
-        newUserInfo.success = false;
-        return newUserInfo;
-      })
-}
+
 
 export const signInWithEmailAndPassword = (email, pass) => {
     return firebase.auth().signInWithEmailAndPassword(email, pass)
       .then(res => {
-        const newUserInfo = res.user;
-        newUserInfo.error = '';
-        newUserInfo.success = true;
-        return newUserInfo
+        return res.user;
       }).catch(err => {
-        const newUserInfo = {};
-        newUserInfo.error = err.message;
-        newUserInfo.success = false;
-        return newUserInfo;
+        return err.message;
       })
 }
 
-const updateUserInfo = name => {
-    const user = firebase.auth().currentUser;
 
-    user.updateProfile({
-      displayName: name,
-    }).then(
-      console.log('user updated successfully!!!')
-    ).catch(err => {
-      console.log('not updated');
-    });
-}
     

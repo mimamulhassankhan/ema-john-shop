@@ -1,13 +1,21 @@
 import React, { useContext, useState } from 'react';
 import { UserContext } from '../../App';
 import { useHistory, useLocation } from 'react-router-dom';
-import { handleGoogleSignIn, handleFbSignIn, handleSignOut, defaulftLoggingFramework, createUserWithEmailAndPassword, signInWithEmailAndPassword } from './loginManager';
+import { handleGoogleSignIn, handleFbSignIn, handleSignOut, signInWithEmailAndPassword } from './loginManager';
+import Button from '@material-ui/core/Button';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import { useForm } from 'react-hook-form';
+import { addSignedUser } from '../../Redux/Actions/StoreActions';
+import { connect } from 'react-redux';
 
 
 
-function Login() {
-  //call login framework
-  defaulftLoggingFramework();
+
+const Login = ({addSignedUser}) => {
+
+  const { handleSubmit, register, errors, reset } = useForm();
 
   //states
   const [newUser, setNewUser] = useState(false);
@@ -30,8 +38,7 @@ function Login() {
   const googleSignIn = () => {
     handleGoogleSignIn()
     .then(res => {
-      setUser(res);
-      setLoggedInUser(res);
+      addSignedUser(res);
       history.replace(from);
     })
   }
@@ -50,76 +57,92 @@ function Login() {
       setLoggedInUser(res);
     })
   }
+  
+  // const handleSubmit= (e) => {
+    // if(newUser && user.email && user.password){
+    //   createUserWithEmailAndPassword(user.name, user.email, user.password)
+    //   .then(res => {
+    //     setUser(res);
+    //     setLoggedInUser(res);
+    //     history.replace(from);
+    //   })
+    // }
+    // else if(!newUser && user.email && user.password){
+    //   signInWithEmailAndPassword(user.email, user.password)
+    //   .then(res => {
+    //     setUser(res);
+    //     setLoggedInUser(res);
+    //     history.replace(from);
+    //   })
+    // }
+  //   e.preventDefault(); 
+  // }
 
-  const handleBlur = (e) => {
-    let isFormValid = true;
-    if(e.target.name === 'email'){
-      isFormValid = /\S+\@\S+\.\S+/.test(e.target.value);
-    }
-    else if(e.target.name === 'password'){
-      isFormValid = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(e.target.value)
-    }
-    if(isFormValid){
-      const newUserInfo = {...user};
-      newUserInfo[e.target.name] = e.target.value;
-      setUser(newUserInfo);
-    }
-    e.preventDefault(); 
-  }
-
-  const handleSubmit= (e) => {
-    if(newUser && user.email && user.password){
-      createUserWithEmailAndPassword(user.name, user.email, user.password)
+  const onSubmit = handleSubmit((data) => {
+    const {email, password} = data;
+    if(email && password){
+      signInWithEmailAndPassword(email, password)
       .then(res => {
-        setUser(res);
-        setLoggedInUser(res);
+        addSignedUser(res);
         history.replace(from);
+        reset();
       })
     }
-    else if(!newUser && user.email && user.password){
-      signInWithEmailAndPassword(user.email, user.password)
-      .then(res => {
-        setUser(res);
-        setLoggedInUser(res);
-        history.replace(from);
-      })
-    }
-    e.preventDefault(); 
-  }
+  });
 
   return (
-    <div style={{textAlign:'center'}}>
-      {
-        user.isSignedIn ? <button onClick={signOut}>Sign Out</button> : <button onClick={googleSignIn}>Sign in</button>
-      }
-      <br/>
-      <button onClick={fbSignIn}>Sign in with facebook</button>
-      {
-        user.isSignedIn && <div>
-            <h3>Name: {user.name}</h3>
-            <h4>Email : {user.email}</h4>
-            <img src={user.photo} alt="user"/>
-        </div>
-      }
-      <h3>Our own Authentication provider:</h3>
-      <form onSubmit={handleSubmit}>
-        <input onChange={() => setNewUser(!newUser)} type="checkbox" name="newUser"/>
-        <label htmlFor="newUser">Create New User</label>
-        <br/>
-        { newUser && <input onBlur={handleBlur} type="text" name="name" placeholder="Enter Name" />}
-        <br/>
-        <input onBlur={handleBlur} type="text" name="email"  placeholder="Enter Email" required/>
-        <br/> 
-        <input onBlur={handleBlur} type="password" name="password" placeholder="Enter Password" required/>
-        <br/> 
-        <input type="submit" value="Submit"/>
+    <Container className="my-5" maxWidth="xs">
+      <form onSubmit={onSubmit}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  type="email"
+                  inputRef={register({ required: true })}
+                  label="Email"
+                  name="email"
+                  size="small"
+                  variant="outlined"
+                />
+                {errors.email && <span className="text-danger">This field is required</span>}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  inputRef={register({ required: true, minLength: 6, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/})}
+                  label="Password"
+                  name="password"
+                  size="small"
+                  type="password"
+                  variant="outlined"
+                />
+                {errors.password && errors.password.type === "required" && <span className="text-danger">This field is required</span>}
+                {errors.password && errors.password.type === "minLength" && <span className="text-danger">Must 6 charecter long</span>}
+                {errors.password && errors.password.type === "pattern" && <span className="text-danger">Must have alphabets and numbers</span>}
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Button color="secondary" fullWidth type="submit" variant="contained">
+              Log in
+            </Button>
+          </Grid>
+        </Grid>
       </form>
-      <p style={{color: 'red'}}>{user.error}</p>
-      {
-        user.success && <p style={{color: 'green'}}>Successfully account {newUser ? 'created' : 'Logged In'}.</p>
-      }
-    </div>
+    </Container>
   );
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = {
+  addSignedUser : addSignedUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

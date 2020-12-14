@@ -6,16 +6,10 @@
     text-align: center;
 }
 
-.header nav{
-    background-color: black;
-    
-    display: flex;
-}
 nav a{
     color: white;
     text-decoration: none;
-    padding: 5px;
-    width: 130px;
+    width: 200px;
 }
 nav a:hover{
     background-color: gray;

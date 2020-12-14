@@ -1,15 +1,21 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
-import { UserContext } from '../../App';
 
-const PrivateRoute = ({children, ...rest}) => {
-    const [loggedInUser] = useContext(UserContext);
+const PrivateRoute = ({user, children, ...rest}) => {
+    console.log(user);
     return (
         <Route {...rest} render={({ location }) =>
-            (sessionStorage.getItem('token') || loggedInUser.email) ? ( children ) : (
+            // (sessionStorage.getItem('token') || loggedInUser.email) 
+            // user.email
+            1 ? ( children ) : (
             <Redirect
                 to={{ pathname: "/login", state: { from: location }}}/> )} />
     );
 };
-
-export default PrivateRoute;
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+} 
+export default connect(mapStateToProps)(PrivateRoute);
