@@ -1,5 +1,4 @@
-import React, { useContext, useState } from 'react';
-import { UserContext } from '../../App';
+import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { handleGoogleSignIn, handleFbSignIn, handleSignOut, signInWithEmailAndPassword } from './loginManager';
 import Button from '@material-ui/core/Button';
@@ -19,7 +18,6 @@ const Login = ({addSignedUser}) => {
 
   //states
   const [newUser, setNewUser] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useContext(UserContext);
   const [user, setUser] = useState({
     isSignedIn : false,
     name: '',
@@ -54,7 +52,7 @@ const Login = ({addSignedUser}) => {
     handleSignOut()
     .then(res => {
       setUser(res);
-      setLoggedInUser(res);
+      //setLoggedInUser(res);
     })
   }
   

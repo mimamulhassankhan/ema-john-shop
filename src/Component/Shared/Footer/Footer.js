@@ -16,16 +16,16 @@ const Footer = () => {
                         <ul >
                             <p><strong>ABOUT US</strong></p>
                             <li>
-                                <Link to={`/!#`}>About us</Link>
+                                <Link to={`/#`}>About us</Link>
                             </li>
                             <li>
-                                <Link to={`/!#`}>Store location</Link>
+                                <Link to={`/#`}>Store location</Link>
                             </li>
                             <li>
-                                <Link to={`/!#`}>Contact</Link>
+                                <Link to={`/#`}>Contact</Link>
                             </li>
                             <li>
-                                <Link to={`/!#`}>Orders tracking</Link>
+                                <Link to={`/#`}>Orders tracking</Link>
                             </li>
                         </ul>
                     </Col>
@@ -33,16 +33,16 @@ const Footer = () => {
                         <ul >
                             <p><strong>ABOUT US</strong></p>
                             <li className="text-decoration-none">
-                                <Link to={`/!#`}>About us</Link>
+                                <Link to={`/#`}>About us</Link>
                             </li>
                             <li>
-                                <Link to={`/!#`}>Store location</Link>
+                                <Link to={`/#`}>Store location</Link>
                             </li>
                             <li>
-                                <Link to={`/!#`}>Contact</Link>
+                                <Link to={`/#`}>Contact</Link>
                             </li>
                             <li>
-                                <Link to={`/!#`}>Orders tracking</Link>
+                                <Link to={`/#`}>Orders tracking</Link>
                             </li>
                         </ul>
                     </Col>
@@ -50,16 +50,16 @@ const Footer = () => {
                         <ul >
                             <p><strong>ABOUT US</strong></p>
                             <li className="text-decoration-none">
-                                <Link to={`/!#`}>About us</Link>
+                                <Link to={`/#`}>About us</Link>
                             </li>
                             <li>
-                                <Link to={`/!#`}>Store location</Link>
+                                <Link to={`/#`}>Store location</Link>
                             </li>
                             <li>
-                                <Link to={`/!#`}>Contact</Link>
+                                <Link to={`/#`}>Contact</Link>
                             </li>
                             <li>
-                                <Link to={`/!#`}>Orders tracking</Link>
+                                <Link to={`/#`}>Orders tracking</Link>
                             </li>
                         </ul>
                     </Col>
@@ -67,13 +67,13 @@ const Footer = () => {
                         <ul >
                             <p><strong>ABOUT US</strong></p>
                             <li className="text-decoration-none">
-                                <Link to={`/!#`}>About us</Link>
+                                <Link to={`/#`}>About us</Link>
                             </li>
                             <li>
-                                <Link to={`/!#`}>Store location</Link>
+                                <Link to={`/#`}>Store location</Link>
                             </li>
                             <li>
-                                <Link to={`/!#`}>Seller</Link>
+                                <Link to={`/#`}>Register as Seller</Link>
                             </li>
                             <li>
                                 <Link to={`/superAdmin`}>Super Admin</Link>

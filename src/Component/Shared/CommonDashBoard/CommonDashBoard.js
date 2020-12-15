@@ -13,6 +13,11 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import logo from '../../../images/logo.png';
 import AddSeller from '../../SuperAdminPage/AddSeller/AddSeller';
+import ViewAllCategory from '../../SuperAdminPage/ViewAllCategory/ViewAllCategory';
+import ViewAllSeller from '../../SuperAdminPage/ViewAllSeller/ViewAllSeller';
+import ViewAllOrder from '../../SuperAdminPage/ViewAllOrder/ViewAllOrder';
+import AddProduct from '../../SellerPortal/AddProduct/AddProduct';
+import ViewSellerOrders from '../../SellerPortal/ViewSellerOrders/ViewSellerOrders';
 
 const drawerWidth = 300;
 
@@ -45,7 +50,7 @@ const CommonDashBoard = ({role, user, addLoggedinUser}) => {
     const history = useHistory();
     let { from } = location.state || { from: { pathname: "/" } };
 
-    const [selectedOption, setSelectedOption] = useState( role === 'superAdmin' ? 'addCategory' : role === 'seller' ? 'addProduct' : 'myOrders');
+    const [selectedOption, setSelectedOption] = useState( role === 'superAdmin' ? 'addSeller' : role === 'seller' ? 'addProduct' : 'myOrders');
 
     // const signOut = (e) => {
     //     e.preventDefault();
@@ -78,21 +83,21 @@ const CommonDashBoard = ({role, user, addLoggedinUser}) => {
                 {
                     role === 'superAdmin' ?
                     <>
-                    <ListItem button onClick={() => setSelectedOption('addCategory')}>
-                        <ListItemIcon><FontAwesomeIcon icon={faLockOpen} /></ListItemIcon>
-                        <ListItemText primary="Add Category" />
-                    </ListItem>
                     <ListItem button onClick={() => setSelectedOption('addSeller')}>
                         <ListItemIcon><FontAwesomeIcon icon={faPlus} /></ListItemIcon>
                         <ListItemText primary="Add Seller" />
                     </ListItem>
                     <ListItem button onClick={() => setSelectedOption('viewAllCategory')}>
                         <ListItemIcon><FontAwesomeIcon icon={faUserPlus} /></ListItemIcon>
-                        <ListItemText primary="View Categroies" />
+                        <ListItemText primary="Add/View Categroies" />
                     </ListItem>
                     <ListItem button onClick={() => setSelectedOption('viewSeller')}>
                         <ListItemIcon><FontAwesomeIcon icon={faUserPlus} /></ListItemIcon>
                         <ListItemText primary="View All Seller" />
+                    </ListItem>
+                    <ListItem button onClick={() => setSelectedOption('viewAdminOrders')}>
+                        <ListItemIcon><FontAwesomeIcon icon={faList} /></ListItemIcon>
+                        <ListItemText primary="View Orders" />
                     </ListItem>
                     </> 
                     :
@@ -100,11 +105,11 @@ const CommonDashBoard = ({role, user, addLoggedinUser}) => {
                     <>
                     <ListItem button onClick={() => setSelectedOption('addProduct')}>
                         <ListItemIcon><FontAwesomeIcon icon={faShoppingCart} /></ListItemIcon>
-                        <ListItemText primary="Add Product" />
+                        <ListItemText primary="Add/View Product" />
                     </ListItem>
-                    <ListItem button onClick={() => setSelectedOption('viewAllProduct')}>
+                    <ListItem button onClick={() => setSelectedOption('viewSellerOrders')}>
                         <ListItemIcon><FontAwesomeIcon icon={faList} /></ListItemIcon>
-                        <ListItemText primary="View All Products" />
+                        <ListItemText primary="View Orders" />
                     </ListItem>
                     </>
                     :
@@ -112,6 +117,10 @@ const CommonDashBoard = ({role, user, addLoggedinUser}) => {
                     <ListItem button onClick={() => setSelectedOption('myOrders')}>
                         <ListItemIcon><FontAwesomeIcon icon={faShoppingCart} /></ListItemIcon>
                         <ListItemText primary="My Orders" />
+                    </ListItem>
+                    <ListItem button onClick={() => setSelectedOption('updateInfo')}>
+                        <ListItemIcon><FontAwesomeIcon icon={faShoppingCart} /></ListItemIcon>
+                        <ListItemText primary="Update Info" />
                     </ListItem>
                     </>
                 }
@@ -128,21 +137,21 @@ const CommonDashBoard = ({role, user, addLoggedinUser}) => {
             {
                 selectedOption === 'addSeller' && <AddSeller></AddSeller>
             }
-            {/* {
-                selectedOption === 'servicelist'&& <ServiceConsumed></ServiceConsumed>
+            {
+                selectedOption === 'viewAllCategory'&& <ViewAllCategory></ViewAllCategory>
             }
             {
-                selectedOption === 'reviews'&& <GiveReview></GiveReview>
+                selectedOption === 'viewSeller'&& <ViewAllSeller></ViewAllSeller>
             }
             {
-                selectedOption === 'adminservicelist'&& <AdminServiceList></AdminServiceList>
+                selectedOption === 'viewAdminOrders'&& <ViewAllOrder></ViewAllOrder>
             }
             {
-                selectedOption === 'addservice'&& <AddService></AddService>
+                selectedOption === 'addProduct'&& <AddProduct></AddProduct>
             }
             {
-                selectedOption === 'makeadmin'&& <MakeAdmin></MakeAdmin>
-            } */}
+                selectedOption === 'viewSellerOrders'&& <ViewSellerOrders></ViewSellerOrders>
+            }
         </main>
         </div>
         </>

@@ -3,15 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Button, Form, Table } from 'react-bootstrap';
 
-const ViewAllSeller = () => {
+const ViewSellerOrders = () => {
     return (
         <>
-        <Table className="text-center rounded m-2 bg-white p-3" striped bordered hover size="sm">
+            <Table className="text-center rounded m-2 bg-white p-3" striped bordered hover size="sm">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Seller Name</th>
+                    <th>Order No</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
                     <th>Address</th>
+                    <th>Seller</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -21,10 +24,15 @@ const ViewAllSeller = () => {
                     <td>1</td>
                     <td>pt.appointmentDate</td>
                     <td>pt.docId</td>
+                    <td>pt.docId</td>
+                    <td>pt.docId</td>
+                    <td>pt.docId</td>
                     <td>
                         <Form.Control as="select" defaultValue={0}>
-                            <option value="Active">Active</option>
-                            <option value="Disabled">Disabled</option>
+                            <option value="Accept">Accept</option>
+                            <option value="Processing">Processing</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Rejected">Rejected</option>
                         </Form.Control>
                     </td>
                     <td className="d-flex justify-content-around" >
@@ -35,9 +43,9 @@ const ViewAllSeller = () => {
                     
                 </tr>
             </tbody>
-        </Table>  
+        </Table>
         </>
     );
 };
 
-export default ViewAllSeller;
+export default ViewSellerOrders;

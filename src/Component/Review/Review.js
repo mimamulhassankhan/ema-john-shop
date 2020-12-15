@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { getDatabaseCart, processOrder, removeFromDatabaseCart } from '../../utilities/databaseManager';
-import { Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap';
 import ReviewItems from '../ReviewItems/ReviewItems';
-import Cart from '../Cart/Cart';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import happyImage from '../../images/giphy.gif';
+import { connect } from 'react-redux';
 
-const Review = () => {
+const Review = ({cartForReview}) => {
     const [cart, setCart] = useState([]);
     const [orderPlaced, setOrderPlaced] = useState(false);
 
@@ -42,7 +42,12 @@ const Review = () => {
     }
     return (
         <div className="d-flex">
-            <div style={{width: '70%'}}>
+            {
+                cartForReview.length === 0 ?
+                <Redirect to={`/`} />
+                :
+
+                <div>
                 { successImage }
                 <Table striped bordered hover variant="dark">
                     <thead>
@@ -56,23 +61,30 @@ const Review = () => {
                     </thead>
                     <tbody>
                         {
-                            cart.map(pd => <ReviewItems clickHandler={deleteProductHandler} key={pd.key} product={pd}></ReviewItems>)
+                            cartForReview && cartForReview.map(pd => <ReviewItems clickHandler={deleteProductHandler} key={pd._id} product={pd}></ReviewItems>)
                         }
                         <tr>
                             <td className="bg-danger text-right" colSpan="4"><strong>Total : </strong></td>
                             <td className="bg-danger"></td>
                         </tr>
                     </tbody>
-                </Table>
-            </div>
-            <div className="ml-2 mt-2">
-                <Cart items={cart}>
-                <button onClick={placeOrderButtonClick} className="btn btn-info">Place Order</button>
-                </Cart>
-            </div>
-            
+                    </Table>
+                    {
+                        cartForReview.length > 0 ? 
+                        <Link to={`/shipment`} className="btn btn-info float-right">Checkout</Link>
+                        :
+                        <Button variant="danger" className="float-right" disabled>Please Add Some Product For Review</Button>
+                    }
+                </div>
+            }
         </div>
     );
 };
 
-export default Review;
+const mapStateToProps = state => {
+    return{
+        cartForReview : state.cart
+    }
+}
+
+export default connect(mapStateToProps)(Review);

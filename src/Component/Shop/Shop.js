@@ -55,12 +55,7 @@ const Shop = () => {
                 {
                     products.map(oneProduct => <Product showAddToCart={true} clickHandler={addProductToCart} product={oneProduct} key={oneProduct._id}></Product>)
                 }
-            </div>
-            <div className="cart-container">
-                <Cart items={cart}>
-                    <Link to="/shipment"><button className="btn btn-danger">Procced Checkout</button></Link>
-                </Cart>
-            </div>  
+            </div> 
         </div>
     );
 };

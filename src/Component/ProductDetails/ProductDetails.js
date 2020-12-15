@@ -7,15 +7,15 @@ const ProductDetails = () => {
     const [product, setProduct] = useState({});
 
     useEffect(() => {
-        fetch('https://fathomless-basin-42766.herokuapp.com/product/'+productkey)
+        fetch('http://localhost:5000/product/'+productkey)
         .then(res => res.json())
         .then(data => setProduct(data))
     }, [productkey])
 
     return (
-        <div>
-            <Product key={product.key} product={product} showAddToCart={false}></Product>
-        </div>
+        <>
+            <Product product={product}></Product>
+        </>
     );
 };
 

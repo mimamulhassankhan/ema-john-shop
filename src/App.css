@@ -6,6 +6,10 @@
   font-family: 'Poppins', sans-serif;
 }
 
+body {
+  background-color:gray;
+}
+
 p{
   margin: 0px 0px !important;
 }
