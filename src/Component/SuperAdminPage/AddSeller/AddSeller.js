@@ -1,14 +1,51 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
+import { fetchSellerInfo } from '../../../Redux/Actions/StoreActions';
+import DashboardNav from '../../Shared/DashboardNav/DashboardNav';
+import { createUserWithEmailAndPassword } from '../../Shared/SignUp/SignUpManager';
 
-const AddSeller = () => {
+const AddSeller = ({sellers, fetchSellerInfo}) => {
     const { register, handleSubmit, errors, reset } = useForm();
 
     const onSubmit = data => {
-       console.log(data); 
+        const {sellerName, sellerUserName, sellerPassword} = data;
+        if(sellerName && sellerUserName && sellerPassword){
+        createUserWithEmailAndPassword(sellerName, sellerUserName, sellerPassword)
+        .then(res => {
+            console.log(res);
+            if(res){
+                fetch('http://localhost:5000/addSeller', {
+                    method: 'POST',
+                    headers: { 'Content-type':'application/json'},
+                    body: JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data){
+                        fetchSellerInfo([data, ...sellers]);
+                        reset();
+                    }
+                })
+            }
+        })
+        }
+        fetch('http://localhost:5000/addSeller', {
+                method: 'POST',
+                headers: { 'Content-type':'application/json'},
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data){
+                    fetchSellerInfo([data, ...sellers]);
+                    reset();
+                }
+            })
     }
     return (
         <>
+        <DashboardNav displayOption="Add Seller"></DashboardNav>
         <form className="p-5 bg-white rounded m-2" onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group row">
                 <div className="col-6">
@@ -44,4 +81,13 @@ const AddSeller = () => {
     );
 };
 
-export default AddSeller;
+const mapStateToProps = state => {
+    return{
+        sellers: state.sellers
+    }
+}
+
+const mapDispatchToProps = {
+    fetchSellerInfo: fetchSellerInfo
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AddSeller);

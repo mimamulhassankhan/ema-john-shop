@@ -1,7 +1,6 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import Header from './Component/Header/Header';
-import Shop from './Component/Shop/Shop';
 import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Review from './Component/Review/Review';
 import Error from './Component/Error/Error';
@@ -16,35 +15,94 @@ import SuperAdminIndex from './Component/SuperAdminPage/SuperAdminIndex/SuperAdm
 import SellerPortalIndex from './Component/SellerPortal/SellerPortalIndex/SellerPortalIndex';
 import ConsumerPortalIndex from './Component/ConsumerPortal/ConsumerPortalIndex/ConsumerPortalIndex';
 import HomePageIndex from './Component/HomePage/HomePageIndex/HomePageIndex';
-import { addAllProduct } from './Redux/Actions/StoreActions';
+import { addAllProduct, addCategory, fetchAllOrders, fetchSellerInfo } from './Redux/Actions/StoreActions';
 import { connect } from 'react-redux';
 
-export const UserContext = createContext();
+const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
+  <Route {...rest} render={props => (
+    <Layout>
+      <Component {...props} />
+    </Layout>
+  )} />
+)
 
-function App({addAllProduct}) {
+const MainLayout = props => (
+  <>
+    <Header></Header>
+    {props.children}
+    <Footer></Footer>
+  </>
+)
+
+const DashBoardLayout = props => (
+  <>
+    {props.children}
+  </>
+)
+
+
+function App({addAllProduct, fetchAllOrders, fetchSellerInfo, addCategory}) {
   
   useEffect( () => {
+    const fetchProductData = () =>{
       fetch('http://localhost:5000/products')
       .then(res => res.json())
-      .then(data => addAllProduct(data));
-  }, [addAllProduct])
+      .then(productData => {
+        addAllProduct(productData);
+      });
+    }
+
+    const fetchOrderData = () => {
+      fetch('http://localhost:5000/getAllOrders')
+      .then(res => res.json())
+      .then(orderData => {
+        fetchAllOrders(orderData);
+      });
+    }
+
+    const fetchSellerData = () => {
+      fetch('http://localhost:5000/getAllSellers')
+      .then(res => res.json())
+      .then(sellerData => {
+        fetchSellerInfo(sellerData);
+      });
+    }
+
+    const fetchCategoryData = () => {
+      fetch('http://localhost:5000/categories')
+      .then(res => res.json())
+      .then(categoryData => {
+          addCategory(categoryData);
+      })
+    }
+    
+    fetchProductData();
+    fetchOrderData();
+    fetchSellerData();
+    fetchCategoryData();
+  }, [addAllProduct, fetchAllOrders, fetchSellerInfo, addCategory])
 
 
   return (
       <Router>
-        <Header></Header>
           <Switch>
-            <Route exact path="/">
+            <AppRoute exact path="/" layout={ MainLayout } component={ HomePageIndex } />
+            {/* <Route exact path="/">
               <HomePageIndex></HomePageIndex>
-            </Route>
-            <Route path="/review">
+            </Route> */}
+            <AppRoute exact path="/review" layout={ MainLayout } component={ Review } />
+            {/* <Route path="/review">
               <Review></Review>
-            </Route>
+            </Route> */}
             <PrivateRoute path="/manage">
               <InventoryIndex></InventoryIndex>
             </PrivateRoute>
             <PrivateRoute path="/shipment">
+              <>
+              <Header></Header>
               <Shipment></Shipment>
+              <Footer></Footer>
+              </>
             </PrivateRoute>
             <PrivateRoute path="/superAdmin">
               <SuperAdminIndex></SuperAdminIndex>
@@ -55,9 +113,11 @@ function App({addAllProduct}) {
             <PrivateRoute path="/myAccount">
               <ConsumerPortalIndex></ConsumerPortalIndex>
             </PrivateRoute>
-            <Route path="/login">
+            <AppRoute path="/login" layout={ DashBoardLayout } component={ ProfilingPage } />
+            {/* <Route path="/login">
               <ProfilingPage></ProfilingPage>
-            </Route>
+            </Route> */}
+            <AppRoute path="/product/:productkey" layout={ MainLayout } component={ ProductDetails } />
             <Route path="/product/:productkey">
               <ProductDetails></ProductDetails>
             </Route>
@@ -65,7 +125,6 @@ function App({addAllProduct}) {
               <Error></Error>
             </Route>
           </Switch>
-        <Footer></Footer>
       </Router>
   );
 }
@@ -77,7 +136,10 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  addAllProduct : addAllProduct
+  addAllProduct : addAllProduct,
+  fetchAllOrders: fetchAllOrders,
+  fetchSellerInfo: fetchSellerInfo,
+  addCategory: addCategory
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

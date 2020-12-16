@@ -1,45 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { getDatabaseCart, processOrder, removeFromDatabaseCart } from '../../utilities/databaseManager';
+import React from 'react';
 import { Button, Table } from 'react-bootstrap';
 import ReviewItems from '../ReviewItems/ReviewItems';
 import { Link, Redirect } from 'react-router-dom';
-import happyImage from '../../images/giphy.gif';
 import { connect } from 'react-redux';
 
 const Review = ({cartForReview}) => {
-    const [cart, setCart] = useState([]);
-    const [orderPlaced, setOrderPlaced] = useState(false);
 
-    useEffect( () => {
-        const localCart = getDatabaseCart();
-        const productKeys = Object.keys(localCart);
-
-        fetch('https://fathomless-basin-42766.herokuapp.com/selectedProduct', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(productKeys)
-        })
-        .then(res => res.json())
-        .then(data => setCart(data));
-    }, []);
-
-    const placeOrderButtonClick = () => {
-        processOrder();
-        setCart([]);
-        setOrderPlaced(true);
-    }
-
-    const deleteProductHandler = (productKey) =>{
-        const newCart = cart.filter(pd => pd.key !== productKey);
-        setCart(newCart);
-        removeFromDatabaseCart(productKey);
-    }
-    let successImage; 
-    if(orderPlaced){
-        successImage = <img src={happyImage} alt="happyman"/>
-    }
     return (
         <div className="d-flex">
             {
@@ -48,7 +14,6 @@ const Review = ({cartForReview}) => {
                 :
 
                 <div>
-                { successImage }
                 <Table striped bordered hover variant="dark">
                     <thead>
                         <tr>
@@ -61,7 +26,7 @@ const Review = ({cartForReview}) => {
                     </thead>
                     <tbody>
                         {
-                            cartForReview && cartForReview.map(pd => <ReviewItems clickHandler={deleteProductHandler} key={pd._id} product={pd}></ReviewItems>)
+                            cartForReview && cartForReview.map(pd => <ReviewItems clickHandler={() => console.log('Delete Clicked')} key={pd._id} product={pd}></ReviewItems>)
                         }
                         <tr>
                             <td className="bg-danger text-right" colSpan="4"><strong>Total : </strong></td>

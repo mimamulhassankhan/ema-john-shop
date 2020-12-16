@@ -3,6 +3,8 @@ export const ADD_TO_CART = 'ADD_TO_CART';
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const ADD_CATEGORY = 'ADD_CATEGORY';
 export const ADD_ALL_PRODUCT = 'ADD_ALL_PRODUCT';
+export const FETCH_ALL_ORDERS = 'FETCH_ALL_ORDERS';
+export const FETCH_SELLER_INFO = 'FETCH_SELLER_INFO';
 
 export const addSignedUser = userDetails => {
     return {
@@ -39,3 +41,16 @@ export const addAllProduct = product => {
     }
 }
 
+export const fetchAllOrders = orders => {
+    return{
+        type: FETCH_ALL_ORDERS,
+        orders
+    }
+}
+
+export const fetchSellerInfo = sellers =>{
+    return{
+        type: FETCH_SELLER_INFO,
+        sellers
+    }
+}

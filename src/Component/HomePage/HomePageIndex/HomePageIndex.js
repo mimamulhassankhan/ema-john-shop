@@ -5,16 +5,8 @@ import CategorySection from '../CategorySection/CategorySection';
 import ProductContainer from '../ProductContainer/ProductContainer';
 import SelectionTab from '../SelectionTab/SelectionTab';
 
-const HomePageIndex = ({categories, addCategory}) => {
+const HomePageIndex = ({categories}) => {
     const [selectedCategory, setSelectedCategory] = useState('trending-items');
-
-    useEffect(() => {
-        fetch('http://localhost:5000/categories')
-        .then(res => res.json())
-        .then(data => {
-            addCategory(data);
-        })
-    }, [addCategory]);
 
     return (
         <>
@@ -32,8 +24,4 @@ const mapStateToProps = state => {
     }
 }
 
-const mapDispatchToProps = {
-    addCategory: addCategory
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomePageIndex);
+export default connect(mapStateToProps)(HomePageIndex);

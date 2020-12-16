@@ -2,10 +2,12 @@ import { faEye, faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Button, Form, Table } from 'react-bootstrap';
+import DashboardNav from '../../Shared/DashboardNav/DashboardNav';
 
 const ViewSellerOrders = () => {
     return (
         <>
+            <DashboardNav displayOption="View Orders"></DashboardNav>
             <Table className="text-center rounded m-2 bg-white p-3" striped bordered hover size="sm">
             <thead>
                 <tr>

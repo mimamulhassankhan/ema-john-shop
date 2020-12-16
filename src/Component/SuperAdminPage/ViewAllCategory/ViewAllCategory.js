@@ -4,10 +4,12 @@ import { Button, Table } from 'react-bootstrap';
 import AddCategory from '../AddCategory/AddCategory';
 import {faPen, faTrashAlt, faEye} from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
+import DashboardNav from '../../Shared/DashboardNav/DashboardNav';
 
 const ViewAllCategory = ({categories}) => {
     return (
         <>
+            <DashboardNav displayOption="Add/View Category"></DashboardNav>
             <AddCategory></AddCategory>
             <Table className="text-center rounded m-2 bg-white p-3" striped bordered hover size="sm">
                 <thead>

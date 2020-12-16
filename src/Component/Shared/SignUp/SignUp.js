@@ -6,14 +6,12 @@ import TextField from '@material-ui/core/TextField';
 import { useForm } from 'react-hook-form';
 import { createUserWithEmailAndPassword } from './SignUpManager';
 import { useHistory, useLocation } from 'react-router-dom';
-import { UserContext } from '../../../App';
+import { connect } from 'react-redux';
+import { addSignedUser } from '../../../Redux/Actions/StoreActions';
 
-const SignUp = () => {
+const SignUp = ({user, addSignedUser}) => {
     
-    const { handleSubmit, register, errors, reset } = useForm();
-
-    //context API
-    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const { handleSubmit, register, errors } = useForm();
 
     //localize
     const history = useHistory();
@@ -26,7 +24,7 @@ const SignUp = () => {
     if(fullName && email && password){
       createUserWithEmailAndPassword(fullName, email, password)
       .then(res => {
-        setLoggedInUser(res);
+        addSignedUser(res);
         history.replace(from);
       })
     }
@@ -102,4 +100,14 @@ const SignUp = () => {
     );
 };
 
-export default SignUp;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = {
+  addSignedUser : addSignedUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

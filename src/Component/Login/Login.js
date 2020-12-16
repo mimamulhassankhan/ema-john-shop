@@ -80,10 +80,21 @@ const Login = ({addSignedUser}) => {
     const {email, password} = data;
     if(email && password){
       signInWithEmailAndPassword(email, password)
-      .then(res => {
-        addSignedUser(res);
-        history.replace(from);
-        reset();
+      .then(userData => {
+        if(userData){
+          fetch('http://localhost:5000/seller/'+userData.email)
+          .then(res => res.json())
+          .then(data => {
+            addSignedUser(userData);
+            history.replace(from);
+            reset();
+          })
+          .catch(err => {
+            history.push('/');
+            reset();
+          })
+        }
+        
       })
     }
   });
@@ -109,7 +120,7 @@ const Login = ({addSignedUser}) => {
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  inputRef={register({ required: true, minLength: 6, pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/})}
+                  inputRef={register({ required: true, minLength: 6})}
                   label="Password"
                   name="password"
                   size="small"

@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { addAllProduct } from '../../../Redux/Actions/StoreActions';
+import DashboardNav from '../../Shared/DashboardNav/DashboardNav';
 import ViewAllProducts from '../ViewAllProducts/ViewAllProducts';
 
-const AddProduct = ({categories, products, addAllProduct}) => {
+const AddProduct = ({sellers, user, categories, products, addAllProduct}) => {
     const { register, handleSubmit, errors, reset } = useForm();
+    const [sellerInfo, setSellerInfo] = useState({});
+
+    useEffect( () => {
+        const [selectedSeller] = sellers.filter(seller => seller.sellerUserName === user.email)
+        setSellerInfo(selectedSeller);
+    }, [sellers, user]);
 
     const onSubmit = data => {
-        console.log(data);
         const productData = new FormData();
+        productData.append('productSellerId', sellerInfo._id);
+        productData.append('productSellerName', sellerInfo.sellerName);
         productData.append('productName', data.productName);
         productData.append('productDescription', data.productDescription);
         productData.append('productCategory', data.productCategory);
@@ -31,9 +39,9 @@ const AddProduct = ({categories, products, addAllProduct}) => {
             }
         })
     }
-
     return (
         <>
+            <DashboardNav displayOption="Add Product"></DashboardNav>
             <form className="p-5 bg-white rounded m-2" onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group row">
                 <div className="col-6">
@@ -82,8 +90,9 @@ const AddProduct = ({categories, products, addAllProduct}) => {
 const mapStateToProps = state => {
     return{
         categories: state.categories,
-        products: state.products
-
+        products: state.products,
+        user: state.user,
+        sellers: state.sellers
     }
 }
 

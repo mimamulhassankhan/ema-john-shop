@@ -18,6 +18,8 @@ import ViewAllSeller from '../../SuperAdminPage/ViewAllSeller/ViewAllSeller';
 import ViewAllOrder from '../../SuperAdminPage/ViewAllOrder/ViewAllOrder';
 import AddProduct from '../../SellerPortal/AddProduct/AddProduct';
 import ViewSellerOrders from '../../SellerPortal/ViewSellerOrders/ViewSellerOrders';
+import ViewConsumerOrder from '../../ConsumerPortal/ViewConsumerOrder/ViewConsumerOrder';
+import DashboardNav from '../DashboardNav/DashboardNav';
 
 const drawerWidth = 300;
 
@@ -151,6 +153,9 @@ const CommonDashBoard = ({role, user, addLoggedinUser}) => {
             }
             {
                 selectedOption === 'viewSellerOrders'&& <ViewSellerOrders></ViewSellerOrders>
+            }
+            {
+                selectedOption === 'myOrders'&& <ViewConsumerOrder></ViewConsumerOrder>
             }
         </main>
         </div>

@@ -1,15 +1,23 @@
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Badge, Button, Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import DashboardNav from '../../Shared/DashboardNav/DashboardNav';
 
-const ViewAllOrder = ({orders}) => {
+const ViewConsumerOrder = ({orders, user}) => {
+    const [myOrders, setMyOrders] = useState([]);
+    console.log(orders);
+
+    useEffect( () => {
+        const myOrdersFromAllOrder = orders.filter(order => order.ordererEmail === user.email);
+        console.log(myOrdersFromAllOrder);
+        setMyOrders(myOrdersFromAllOrder);
+    },[orders, user])
     return (
         <>
-            <DashboardNav displayOption="View All Order"></DashboardNav>
-           <Table className="text-center rounded m-2 bg-white p-3" striped bordered hover size="sm">
+            <DashboardNav displayOption="My Orders"></DashboardNav>
+            <Table className="text-center rounded m-2 bg-white p-3" striped bordered hover size="sm">
             <thead>
                 <tr>
                     <th>#</th>
@@ -23,8 +31,8 @@ const ViewAllOrder = ({orders}) => {
             </thead>
             <tbody>
                 {
-                    orders.length > 0 ?
-                    orders.map((order, idx) => 
+                    myOrders.length > 0 ?
+                    myOrders.map((order, idx) => 
                         <tr key={order._id} className="align-center">
                             <td>{idx+1}</td>
                             <td>{order._id}</td>
@@ -44,16 +52,16 @@ const ViewAllOrder = ({orders}) => {
                         :
                         <h6 className="text-center text-danger my-3">Sorry Nothing to show</h6>
                 }
+                
             </tbody>
-        </Table> 
+        </Table>
         </>
     );
 };
-
 const mapStateToProps = state => {
     return{
+        user: state.user,
         orders: state.orders
     }
 }
-
-export default connect(mapStateToProps)(ViewAllOrder);
+export default connect(mapStateToProps)(ViewConsumerOrder);

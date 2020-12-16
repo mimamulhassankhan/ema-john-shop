@@ -1,10 +1,12 @@
-import { ADD_ALL_PRODUCT, ADD_CATEGORY, ADD_TO_CART, ADD_USER, REMOVE_FROM_CART } from "../Actions/StoreActions";
+import { ADD_ALL_PRODUCT, ADD_CATEGORY, ADD_TO_CART, ADD_USER, FETCH_ALL_ORDERS, FETCH_SELLER_INFO, REMOVE_FROM_CART } from "../Actions/StoreActions";
 
 const initialState = {
     user: {},
     cart: [],
     categories: [],
-    products: []
+    products: [],
+    orders: [],
+    sellers: []
 }
 
 export const storeReducer = (state = initialState, action) => {
@@ -34,6 +36,16 @@ export const storeReducer = (state = initialState, action) => {
             return{
                 ...state,
                 products : action.product
+            }
+        case FETCH_ALL_ORDERS:
+            return {
+                ...state,
+                orders: action.orders
+            }
+        case FETCH_SELLER_INFO:
+            return{
+                ...state,
+                sellers: action.sellers
             }
         default:
             return state;

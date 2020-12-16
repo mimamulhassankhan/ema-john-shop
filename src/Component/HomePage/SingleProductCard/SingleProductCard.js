@@ -26,6 +26,7 @@ const SingleProductCard = ({cart, addToCart, product}) => {
                 </Card.Text>
                 <h4 className="text-danger">$ {product.price || product.productPrice}</h4>
             </Card.Body>
+            <Card.Text className="float-right">{product.seller || product.productSellerName}</Card.Text>
             <Button onClick={() => handleAddProductToCart(product)} className="my-2 mx-3" variant="primary">Add to cart</Button>
         </Card>
         </>

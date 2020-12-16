@@ -1,11 +1,19 @@
 import { faEye, faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import DashboardNav from '../../Shared/DashboardNav/DashboardNav';
 
-const ViewAllProducts = ({products}) => {
+const ViewAllProducts = ({user, products}) => {
+    const [sellerProducts, setSellerProducts] = useState([]);
+    useEffect(() =>{
+        const sellerProd = products.filter(prod => (prod.seller || prod.productSellerName) === user.displayName);
+        setSellerProducts(sellerProd);
+    }, [user, products])
     return (
         <>
+        <DashboardNav displayOption="View All Product"></DashboardNav>
         <Table className="text-center rounded m-2 bg-white" striped bordered hover size="sm">
             <thead>
                 <tr>
@@ -19,8 +27,8 @@ const ViewAllProducts = ({products}) => {
             </thead>
             <tbody>
                 {
-                    products.map((prod, idx) => 
-                    <tr key={prod.key || prod._id} className="align-center">
+                    sellerProducts.map((prod, idx) => 
+                    <tr key={prod._id} className="align-center">
                         <td>{idx+1}</td>
                         <td>{prod.key || prod._id}</td>
                         <td>{prod.name || prod.productName}</td>
@@ -40,4 +48,10 @@ const ViewAllProducts = ({products}) => {
     );
 };
 
-export default ViewAllProducts;
+const mapStateToProps = state => {
+    return{
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(ViewAllProducts);

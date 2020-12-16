@@ -18,7 +18,7 @@ const ReviewItems = ({product, clickHandler}) => {
                                 <p className="text-warning">Price : {product.price || product.productPrice}</p>
                             </div>
                             <div>
-                                <p className="text-info">Seller : {product.seller || 'Coming soon'}</p>
+                                <p className="text-info">Seller : {product.seller || product.productSellerName ||  'Coming soon'}</p>
                                 <p><small>Shipping : {product.shipping || 'Coming soon'}</small></p>
                             </div>
                         </div>
