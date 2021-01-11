@@ -6,7 +6,7 @@ import { addCategory } from '../../../Redux/Actions/StoreActions';
 const AddCategory = ({categories, addCategory}) => {
     const { register, handleSubmit, errors, reset } = useForm();
     const onSubmit = data => {
-        fetch('http://localhost:5000/addCategory', {
+        fetch('https://fathomless-basin-42766.herokuapp.com/addCategory', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

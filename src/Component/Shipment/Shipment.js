@@ -27,7 +27,7 @@ const Shipment = ({user,cart, addToCart, orders, fetchAllOrders}) => {
             status: 'pending',
             orderTime: new Date()
         };
-        fetch('http://localhost:5000/addOrder', {
+        fetch('https://fathomless-basin-42766.herokuapp.com/addOrder', {
             method: 'POST',
             headers: { 'Content-type':'application/json'},
             body: JSON.stringify(orderDetails)

@@ -15,7 +15,7 @@ const AddSeller = ({sellers, fetchSellerInfo}) => {
         .then(res => {
             console.log(res);
             if(res){
-                fetch('http://localhost:5000/addSeller', {
+                fetch('https://fathomless-basin-42766.herokuapp.com/addSeller', {
                     method: 'POST',
                     headers: { 'Content-type':'application/json'},
                     body: JSON.stringify(data)
@@ -30,7 +30,7 @@ const AddSeller = ({sellers, fetchSellerInfo}) => {
             }
         })
         }
-        fetch('http://localhost:5000/addSeller', {
+        fetch('https://fathomless-basin-42766.herokuapp.com/addSeller', {
                 method: 'POST',
                 headers: { 'Content-type':'application/json'},
                 body: JSON.stringify(data)

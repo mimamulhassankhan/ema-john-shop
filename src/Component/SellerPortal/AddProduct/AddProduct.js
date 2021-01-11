@@ -26,7 +26,7 @@ const AddProduct = ({sellers, user, categories, products, addAllProduct}) => {
         productData.append('productImage', data.productImage[0]);
 
 
-        fetch('http://localhost:5000/addProduct', {
+        fetch('https://fathomless-basin-42766.herokuapp.com/addProduct', {
             method: 'POST',
             body: productData
         })

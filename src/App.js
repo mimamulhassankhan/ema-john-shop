@@ -45,7 +45,7 @@ function App({addAllProduct, fetchAllOrders, fetchSellerInfo, addCategory}) {
   
   useEffect( () => {
     const fetchProductData = () =>{
-      fetch('http://localhost:5000/products')
+      fetch('https://fathomless-basin-42766.herokuapp.com/products')
       .then(res => res.json())
       .then(productData => {
         addAllProduct(productData);
@@ -53,7 +53,7 @@ function App({addAllProduct, fetchAllOrders, fetchSellerInfo, addCategory}) {
     }
 
     const fetchOrderData = () => {
-      fetch('http://localhost:5000/getAllOrders')
+      fetch('https://fathomless-basin-42766.herokuapp.com/getAllOrders')
       .then(res => res.json())
       .then(orderData => {
         fetchAllOrders(orderData);
@@ -61,7 +61,7 @@ function App({addAllProduct, fetchAllOrders, fetchSellerInfo, addCategory}) {
     }
 
     const fetchSellerData = () => {
-      fetch('http://localhost:5000/getAllSellers')
+      fetch('https://fathomless-basin-42766.herokuapp.com/getAllSellers')
       .then(res => res.json())
       .then(sellerData => {
         fetchSellerInfo(sellerData);
@@ -69,7 +69,7 @@ function App({addAllProduct, fetchAllOrders, fetchSellerInfo, addCategory}) {
     }
 
     const fetchCategoryData = () => {
-      fetch('http://localhost:5000/categories')
+      fetch('https://fathomless-basin-42766.herokuapp.com/categories')
       .then(res => res.json())
       .then(categoryData => {
           addCategory(categoryData);

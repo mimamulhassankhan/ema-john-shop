@@ -82,7 +82,7 @@ const Login = ({addSignedUser}) => {
       signInWithEmailAndPassword(email, password)
       .then(userData => {
         if(userData){
-          fetch('http://localhost:5000/seller/'+userData.email)
+          fetch('https://fathomless-basin-42766.herokuapp.com/seller/'+userData.email)
           .then(res => res.json())
           .then(data => {
             addSignedUser(userData);
